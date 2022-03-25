@@ -1,7 +1,7 @@
 name: 1-minute-cron
 on:
   schedule:
-    cron: '* * * * *'
+    - cron: '* * * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
