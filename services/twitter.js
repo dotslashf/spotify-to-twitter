@@ -12,8 +12,20 @@ class Twitter {
 
   async updateDisplayName(displayName) {
     try {
-      await this.client.post('account/update_profile', {
-        name: displayName,
+      return new Promise((resolve, reject) => {
+        this.client.post(
+          'account/update_profile',
+          {
+            name: displayName,
+          },
+          (err, data, response) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
+          }
+        );
       });
     } catch (error) {
       console.error(error);

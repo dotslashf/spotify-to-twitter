@@ -12,17 +12,17 @@ export default async function handler(req, res) {
         const docs = await db.collection('auth').listDocuments();
         Promise.all(
           docs.map(async doc => {
-            const docRef = await doc.get();
-            const response = await getCurrentlyPlaying(
-              docRef.data().spotify.accessToken
-            );
+            const { spotify, twitter } = (await doc.get()).data();
+            const response = await getCurrentlyPlaying(spotify.accessToken);
             const track = parseNowPlaying(await response.json());
-            console.log(track);
-            const twitter = new Twitter(
-              docRef.data().twitter.accessToken,
-              docRef.data().twitter.secret
+            const twitterClient = new Twitter(
+              twitter.accessToken,
+              twitter.secret
             );
-            await twitter.updateDisplayName(track);
+            const res = await twitterClient.updateDisplayName(track);
+            if (res) {
+              console.log(`${doc.id} updated display name to ${track}`);
+            }
           })
         );
         return res.status(200).json({ message: 'Success' });
