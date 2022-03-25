@@ -9,6 +9,7 @@ export default function NowPlaying() {
   const [isUpdating, setIsUpdating] = useState(false);
 
   function handleSwitchUpdating() {
+    console.log('handleSwitchUpdating');
     setIsUpdating(!isUpdating);
   }
 
@@ -38,15 +39,16 @@ export default function NowPlaying() {
               {data.item.album.name} - {duration(data.item.duration_ms)}
             </span>
             <div className="card-actions">
-              <div className="form-control" onClick={handleSwitchUpdating}>
+              <div className="form-control">
                 <label className="flex cursor-pointer items-center gap-2">
-                  <span className="label-text text-base-100 font-semibold">
+                  <span className="label-text text-accent font-semibold">
                     Update to twitter?
                   </span>
                   <input
                     type="checkbox"
-                    className="toggle toggle-primary"
+                    className="toggle toggle-accent"
                     checked={isUpdating}
+                    onChange={handleSwitchUpdating}
                   />
                 </label>
               </div>
