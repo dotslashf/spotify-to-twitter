@@ -17,7 +17,7 @@ export default function NowPlaying() {
       {error && <div>failed to load</div>}
       {!data && <div>loading...</div>}
       {data && (
-        <div className="card card-compact card-side bg-secondary shadow-md max-w-lg">
+        <div className="card card-compact card-side bg-secondary shadow-md w-full">
           <figure>
             <img
               className="w-36 h-36 object-center object-cover"
@@ -45,7 +45,7 @@ export default function NowPlaying() {
                   </span>
                   <input
                     type="checkbox"
-                    className="toggle toggle-accent"
+                    className="toggle toggle-primary"
                     checked={isUpdating}
                     onChange={handleSwitchUpdating}
                   />

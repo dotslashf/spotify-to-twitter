@@ -9,7 +9,7 @@ export default function Home() {
   const { login, logout, twitterUser } = useAuth();
 
   return (
-    <div className="flex items-center justify-center h-screen bg-base-100">
+    <div className="flex items-center justify-center h-screen w-full bg-base-100">
       {!session && (
         <div>
           <p>Youre not signin</p>
