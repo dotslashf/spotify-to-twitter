@@ -8,15 +8,27 @@ export default async function handler(req, res) {
 
   try {
     const { token, account } = JSON.parse(req.body);
-    await db
-      .collection('auth')
-      .doc(token.sub)
-      .set({
-        spotify: {
-          accessToken: account.refresh_token,
-          // refreshToken: account.refresh_token,
-        },
-      });
+    const docRef = await db.collection('auth').doc(token.sub).get();
+    if (!docRef.exists) {
+      await db
+        .collection('auth')
+        .doc(token.sub)
+        .set({
+          spotify: {
+            accessToken: account.refresh_token,
+          },
+          isUpdating: false,
+        });
+    } else {
+      await db
+        .collection('auth')
+        .doc(token.sub)
+        .update({
+          spotify: {
+            accessToken: account.refresh_token,
+          },
+        });
+    }
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
     console.error(error);

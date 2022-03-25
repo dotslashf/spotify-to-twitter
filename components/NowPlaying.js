@@ -6,17 +6,22 @@ import { useState } from 'react';
 
 export default function NowPlaying() {
   const { data, error } = useSWR(`/api/currentlyPlaying/`, fetcher);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const { data: dataIsUpdating } = useSWR(`/api/player/`, fetcher);
+  const [isUpdating, setIsUpdating] = useState(dataIsUpdating.isUpdating);
 
-  function handleSwitchUpdating() {
+  async function handleSwitchUpdating() {
     setIsUpdating(!isUpdating);
+    const res = await fetch(`/api/player/`, {
+      method: 'POST',
+      body: JSON.stringify({ isUpdating: !isUpdating }),
+    });
   }
 
   return (
     <>
       {error && <div>failed to load</div>}
-      {!data && <div>loading...</div>}
-      {data && (
+      {(!data || !dataIsUpdating) && <div>loading...</div>}
+      {data && dataIsUpdating && (
         <div className="card card-compact card-side bg-secondary shadow-md w-full">
           <figure>
             <img
