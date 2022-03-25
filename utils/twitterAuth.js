@@ -15,8 +15,9 @@ function useTwitterAuth() {
         const credential = TwitterAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const secret = credential.secret;
-        console.log('token', token, 'secret', secret);
-        setTwitterUser(user.displayName);
+        if (user) {
+          setTwitterUser(user.displayName);
+        }
       })
       .catch(error => {
         console.log('error', error);
@@ -25,6 +26,7 @@ function useTwitterAuth() {
 
   const logout = async () => {
     try {
+      setTwitterUser(null);
       return await auth.signOut();
     } catch (error) {
       console.error(error);
@@ -33,7 +35,9 @@ function useTwitterAuth() {
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
-      setTwitterUser(user.displayName);
+      if (user) {
+        setTwitterUser(user.displayName);
+      }
     });
   }, [twitterUser]);
 
