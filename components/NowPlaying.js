@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import useSWR from 'swr';
-import duration from '../utils/duration';
 import fetcher from '../utils/fetcher';
+import duration from '../utils/duration';
 import { useState } from 'react';
 
-export default function NowPlaying() {
+export default function NowPlaying({ isUpdatingToTwitter }) {
   const { data, error } = useSWR(`/api/currentlyPlaying/`, fetcher);
-  const { data: dataIsUpdating } = useSWR(`/api/player/`, fetcher);
-  const [isUpdating, setIsUpdating] = useState(dataIsUpdating.isUpdating);
+  const [isUpdating, setIsUpdating] = useState(isUpdatingToTwitter);
 
   async function handleSwitchUpdating() {
     setIsUpdating(!isUpdating);
@@ -20,8 +19,8 @@ export default function NowPlaying() {
   return (
     <>
       {error && <div>failed to load</div>}
-      {(!data || !dataIsUpdating) && <div>loading...</div>}
-      {data && dataIsUpdating && (
+      {!data && <div>loading...</div>}
+      {data && (
         <div className="card card-compact card-side bg-secondary shadow-md w-full">
           <figure>
             <img

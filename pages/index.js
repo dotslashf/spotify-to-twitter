@@ -7,6 +7,7 @@ import useSWR from 'swr';
 export default function Home() {
   const { data: session } = useSession();
   const { login, logout, twitterUser } = useAuth();
+  const { data: dataIsUpdating } = useSWR(`/api/player/`, fetcher);
 
   return (
     <div className="flex items-center justify-center h-screen w-full bg-base-100">
@@ -23,7 +24,7 @@ export default function Home() {
           </button>
         </div>
       )}
-      {session && (
+      {session && dataIsUpdating && (
         <div className="flex flex-col space-y-4">
           <div className="stats shadow text-primary">
             <div className="stat bg-spotify text-primary">
@@ -77,7 +78,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <NowPlaying />
+          <NowPlaying isUpdatingToTwitter={dataIsUpdating.isUpdating} />
           <div className="flex w-full space-x-2">
             {/* signout spotify */}
             <button
