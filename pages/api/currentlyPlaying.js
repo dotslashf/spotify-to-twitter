@@ -14,7 +14,6 @@ export default async function handler(req, res) {
   const {
     token: { accessToken },
   } = await getSession({ req });
-  console.log('accessToken Cookie', accessToken);
   const response = await getCurrentlyPlaying(accessToken);
   const data = await response.json();
 

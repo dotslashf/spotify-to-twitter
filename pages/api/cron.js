@@ -8,7 +8,9 @@ export default async function handler(req, res) {
     try {
       const { authorization } = req.headers;
 
-      if (authorization === `Bearer ${process.env.SPOTIFY_CLIENT_ID}`) {
+      if (
+        authorization === `Bearer ${process.env.SPOTIFY_TO_TWITTER_API_KEY}`
+      ) {
         const docs = await db.collection('auth').listDocuments();
         Promise.all(
           docs.map(async doc => {
