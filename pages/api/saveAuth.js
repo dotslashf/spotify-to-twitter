@@ -8,14 +8,13 @@ export default async function handler(req, res) {
 
   try {
     const { token, account } = JSON.parse(req.body);
-    console.log(token, account);
     await db
       .collection('auth')
       .doc(token.sub)
       .set({
         spotify: {
-          accessToken: account.access_token,
-          refreshToken: account.refresh_token,
+          accessToken: account.refresh_token,
+          // refreshToken: account.refresh_token,
         },
       });
     return res.status(200).json({ message: 'Success' });

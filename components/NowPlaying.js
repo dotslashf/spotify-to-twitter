@@ -9,7 +9,6 @@ export default function NowPlaying() {
   const [isUpdating, setIsUpdating] = useState(false);
 
   function handleSwitchUpdating() {
-    console.log('handleSwitchUpdating');
     setIsUpdating(!isUpdating);
   }
 
