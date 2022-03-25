@@ -1,0 +1,13 @@
+name: 1-minute-cron
+on:
+  schedule:
+    cron: '* * * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call cron
+        run: |
+          curl --request POST \
+          --url 'https://spotify-to-twitter.vercel.app/api/cron/' \
+          --header 'Authorization: Bearer ${{ secrets.SPOTIFY_TO_TWITTER_API_KEY }}'
