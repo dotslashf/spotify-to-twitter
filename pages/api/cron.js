@@ -1,5 +1,7 @@
 import db from '../../services/firestore';
 import { getCurrentlyPlaying } from '../../services/spotify';
+import parseNowPlaying from '../../utils/parseNowPlaying';
+import Twitter from '../../services/twitter';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -14,7 +16,13 @@ export default async function handler(req, res) {
             const response = await getCurrentlyPlaying(
               docRef.data().spotify.accessToken
             );
-            console.log(await response.json());
+            const track = parseNowPlaying(await response.json());
+            console.log(track);
+            const twitter = new Twitter(
+              docRef.data().twitter.accessToken,
+              docRef.data().twitter.secret
+            );
+            await twitter.updateDisplayName(track);
           })
         );
         return res.status(200).json({ message: 'Success' });
