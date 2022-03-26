@@ -21,7 +21,8 @@ export default async function handler(req, res) {
               const { fullText, trackId } = parseNowPlaying(
                 await response.json()
               );
-              if (spotify.lastPlayed !== trackId) {
+              console.log(spotify.lastTrackId, trackId);
+              if (spotify.lastTrackId !== trackId) {
                 const twitterClient = new Twitter(
                   twitter.accessToken,
                   twitter.secret
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
                     spotify: {
                       ...spotify,
                       lastUpdated: new Date(),
-                      lastPlayed: trackId,
+                      lastTrackId: trackId,
                     },
                   });
                   console.log(`${doc.id} updated statuses to ${fullText}`);

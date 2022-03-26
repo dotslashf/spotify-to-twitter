@@ -26,9 +26,6 @@ const getAccessToken = async refresh_token => {
 export const getCurrentlyPlaying = async refresh_token => {
   try {
     const { access_token } = await getAccessToken(refresh_token);
-    const responseGetAccessToken = await getAccessToken(refresh_token);
-    console.log('new accessToken', responseGetAccessToken);
-    console.log('old accessToken', access_token);
     return fetch(CURRENTLY_PLAYING_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
