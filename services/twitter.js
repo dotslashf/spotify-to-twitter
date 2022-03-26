@@ -31,6 +31,28 @@ class Twitter {
       console.error(error);
     }
   }
+
+  async updateStatus(status) {
+    try {
+      return new Promise((resolve, reject) => {
+        this.client.post(
+          'statuses/update',
+          {
+            status,
+          },
+          (err, data, response) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
+          }
+        );
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default Twitter;

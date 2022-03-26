@@ -14,9 +14,10 @@ export default async function handler(req, res) {
         const docs = await db.collection('auth').listDocuments();
         Promise.all(
           docs.map(async doc => {
+            console.log('updating', doc.id);
             const { spotify, twitter, isUpdating } = (await doc.get()).data();
             if (isUpdating) {
-              const response = await getCurrentlyPlaying(spotify.accessToken);
+              const response = await getCurrentlyPlaying(spotify.refreshToken);
               const { fullText, trackId } = parseNowPlaying(
                 await response.json()
               );
@@ -25,9 +26,8 @@ export default async function handler(req, res) {
                   twitter.accessToken,
                   twitter.secret
                 );
-                const res = await twitterClient.updateDisplayName(fullText);
+                const res = await twitterClient.updateStatus(fullText);
                 if (res) {
-                  console.log(`${doc.id} updated display name to ${fullText}`);
                   await doc.update({
                     spotify: {
                       ...spotify,
@@ -35,9 +35,10 @@ export default async function handler(req, res) {
                       lastPlayed: trackId,
                     },
                   });
+                  console.log(`${doc.id} updated statuses to ${fullText}`);
                 }
               } else {
-                console.log(`${doc.id} already updated display name`);
+                console.log(`${doc.id} already updated statuses`);
               }
             } else {
               return;

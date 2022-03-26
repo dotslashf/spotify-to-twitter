@@ -1,3 +1,0 @@
-POST http://localhost:3000/api/cron
-Authorization: Bearer f1f1b997a25645d08189ce220361b47a
-

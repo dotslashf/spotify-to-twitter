@@ -15,7 +15,9 @@ export default async function handler(req, res) {
         .doc(token.sub)
         .set({
           spotify: {
-            accessToken: account.refresh_token,
+            accessToken: account.access_token,
+            refreshToken: account.refresh_token,
+            expiresIn: account.expires_at,
           },
           isUpdating: false,
         });
@@ -25,7 +27,9 @@ export default async function handler(req, res) {
         .doc(token.sub)
         .update({
           spotify: {
-            accessToken: account.refresh_token,
+            accessToken: account.access_token,
+            refreshToken: account.refresh_token,
+            expiresIn: account.expires_at,
           },
         });
     }
