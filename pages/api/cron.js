@@ -27,8 +27,8 @@ export default async function handler(req, res) {
                   twitter.accessToken,
                   twitter.secret
                 );
-                const res = await twitterClient.updateStatus(fullText);
-                if (res) {
+                try {
+                  await twitterClient.updateStatus(fullText);
                   await doc.update({
                     spotify: {
                       ...spotify,
@@ -37,6 +37,8 @@ export default async function handler(req, res) {
                     },
                   });
                   console.log(`${doc.id} updated statuses to ${fullText}`);
+                } catch (error) {
+                  console.error(error);
                 }
               } else {
                 console.log(`${doc.id} already updated statuses`);
