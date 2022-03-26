@@ -18,7 +18,7 @@ export default function NowPlaying({ isUpdatingToTwitter }) {
 
   return (
     <>
-      {error && <div>failed to load</div>}
+      {error && <div>failed to load {JSON.stringify(error)}</div>}
       {!data && <div>loading...</div>}
       {data && (
         <div className="card card-compact card-side bg-secondary shadow-md w-full">

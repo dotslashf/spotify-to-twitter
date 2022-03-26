@@ -15,6 +15,11 @@ export default async function handler(req, res) {
     token: { accessToken },
   } = await getSession({ req });
   const response = await getCurrentlyPlaying(accessToken);
+  if (response.status !== 200) {
+    return res
+      .status(response.status)
+      .json({ message: 'Currently not playing' });
+  }
   const data = await response.json();
 
   return res.status(200).json(data);
