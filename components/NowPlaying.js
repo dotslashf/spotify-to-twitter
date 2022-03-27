@@ -18,8 +18,8 @@ export default function NowPlaying({ isUpdatingToTwitter }) {
 
   return (
     <>
-      {error && <div>failed to load {JSON.stringify(error)}</div>}
-      {!data && <div>loading...</div>}
+      {error && <NowPlayingLoading />}
+      {!data && <NowPlayingLoading />}
       {data && (
         <div className="card card-compact card-side bg-secondary shadow-md w-full">
           <figure>
@@ -30,7 +30,7 @@ export default function NowPlaying({ isUpdatingToTwitter }) {
             />
           </figure>
           <div className="card-body text-accent justify-center">
-            <h2 className="card-title">
+            <h2 className="card-title font-bold">
               {data.item.name} -{' '}
               {data.item.artists
                 .map(artist => {
@@ -60,5 +60,22 @@ export default function NowPlaying({ isUpdatingToTwitter }) {
         </div>
       )}
     </>
+  );
+}
+
+function NowPlayingLoading() {
+  return (
+    <div className="card card-compact card-side bg-gray-300 shadow-md w-full animate-pulse">
+      <figure>
+        <div className="w-36 h-36 bg-gray-400"></div>
+      </figure>
+      <div className="card-body text-accent justify-center">
+        <div className="card-title h-8 w-52 rounded-md bg-gray-400"></div>
+        <span className="h-6 w-28 rounded-md bg-gray-400"></span>
+        <div className="card-actions">
+          <span className="h-4 w-24 rounded-md bg-gray-400"></span>
+        </div>
+      </div>
+    </div>
   );
 }

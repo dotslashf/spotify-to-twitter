@@ -4,11 +4,12 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
-    colors: {
-      spotify: '#1DB954',
-      twitter: '#1DA1F2',
-      'twitter-dark': '#0F5079',
+    extend: {
+      colors: {
+        spotify: '#1DB954',
+        twitter: '#1DA1F2',
+        'twitter-dark': '#0F5079',
+      },
     },
   },
   plugins: [require('daisyui')],

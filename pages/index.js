@@ -3,6 +3,7 @@ import NowPlaying from '../components/NowPlaying';
 import useAuth from '../utils/twitterAuth';
 import fetcher from '../utils/fetcher';
 import useSWR from 'swr';
+import TweetResult from '../components/TweetResult';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -26,7 +27,7 @@ export default function Home() {
       )}
       {session && dataIsUpdating && (
         <div className="flex flex-col space-y-4">
-          <div className="stats shadow text-primary">
+          <div className="stats grid-cols-2 shadow text-primary">
             <div className="stat bg-spotify text-primary">
               <div className="stat-figure">
                 <svg
@@ -78,7 +79,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <NowPlaying isUpdatingToTwitter={dataIsUpdating.isUpdating} />
           <div className="flex w-full space-x-2">
             {/* signout spotify */}
             <button
@@ -156,6 +156,8 @@ export default function Home() {
               </button>
             )}
           </div>
+          <NowPlaying isUpdatingToTwitter={dataIsUpdating.isUpdating} />
+          <TweetResult />
         </div>
       )}
     </div>
