@@ -14,7 +14,6 @@ export default async function handler(req, res) {
   const {
     token: { accessToken },
   } = await getSession({ req });
-  console.log('accessToken first before refresh', accessToken);
   const response = await getCurrentlyPlaying(accessToken);
   if (response.status !== 200) {
     return res
